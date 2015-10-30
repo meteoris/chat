@@ -1,0 +1,52 @@
+<template name="radiegtya_chatIndex">
+    <div class="content">    
+        <div class="box box-danger direct-chat direct-chat-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">#General Channel</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages">
+                    <!--Show this message if models/chats still empty-->
+                    {{#if isEmpty}}
+                    <div class="alert alert-info" role="alert">
+                        Have fun & Start chatting now, by typing from the message input below... :)
+                    </div>
+                    <!--Else show chats list and loop it through-->
+                    {{else}}                    
+                    {{#each models}}                    
+                    <div class="direct-chat-msg {{messageClass}}"> <!-- Use messageClass to know whether it right style or left style -->
+                        <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-left">{{user.profile.name}}</span> <!-- belongs to relationship from Collections helper we already make before -->
+                            <span class="direct-chat-timestamp pull-right">{{meteoris_formatter 'dateTime' createdAt}}</span> <!-- using meteoris_formatter to easily format date -->
+                        </div><!-- /.direct-chat-info -->
+                        <img class="direct-chat-img" src="images/user.png" alt="message user image"><!-- /.direct-chat-img -->
+                        <div class="direct-chat-text">
+                            {{message}} <!-- show the message -->
+                        </div><!-- /.direct-chat-text -->
+                    </div><!-- /.direct-chat-msg -->
+                    {{/each}}
+                    {{/if}}
+
+                    <!--Show spinner/loading when template subscriptions is not ready yet-->    
+                    {{#unless Template.subscriptionsReady}}
+                    {{> spinner}}
+                    {{/unless}}
+
+                </div><!--/.direct-chat-messages-->
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <form>
+                    <div class="input-group">
+                        <!-- add id message to form input -->
+                        <input id="message" type="text" placeholder="Type Message ..." class="form-control">
+                        <span class="input-group-btn">
+                            <!-- add id btnSend to Send Button -->
+                            <button id="btnSend" type="submit" class="btn btn-danger btn-flat">Send</button>
+                        </span>
+                    </div>
+                </form>
+            </div><!-- /.box-footer-->
+        </div><!--/.direct-chat -->
+    </div>    
+</template>
